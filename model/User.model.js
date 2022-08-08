@@ -16,6 +16,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    isLogin: {
+      type: Boolean,
+      default: false
+    }
   },
   {
     timestamp: true,
@@ -53,6 +57,7 @@ userSchema.statics = {
       if (!isPasswordOk) {
         throw new Error("Password incorrect");
       }
+      await user.updateOne({isLogin: true})
       return user;
     } else {
       const user = await this.findOne({ email }).exec();

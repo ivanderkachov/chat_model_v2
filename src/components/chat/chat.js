@@ -9,6 +9,7 @@ import Header from "./header";
 import Input from "./input";
 import MsgArea from "./msgarea";
 import Userlist from "./userlist"
+import Navigation from "../navigation/navigation";
 import { getUsersInRoom, addMessage } from "../../redux/reducers/rooms";
 
 let socket;
@@ -60,18 +61,23 @@ const Chat = () => {
   console.log(messages);
 
   return (
-    <div className="outerContainer bg-blue-100  ">
-      <div className="container border-slate-500 shadow-md">
-        <Header room={room} />
-        <div className="container2">
-          <Userlist roomData={roomData} />
-          <MsgArea messages={messages} name={name} />
+    <div>
+      <div className="sticky top-0 left-0 right-0">
+        <Navigation />
+      </div>
+      <div className="outerContainer bg-blue-100  ">
+        <div className="container border-slate-500 shadow-md">
+          <Header room={room} />
+          <div className="container2">
+            <Userlist roomData={roomData} />
+            <MsgArea messages={messages} name={name} />
+          </div>
+          <Input
+            message={message}
+            setMessage={setMessage}
+            sendMessage={sendMessage}
+          />
         </div>
-        <Input
-          message={message}
-          setMessage={setMessage}
-          sendMessage={sendMessage}
-        />
       </div>
     </div>
   );

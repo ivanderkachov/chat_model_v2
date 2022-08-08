@@ -121,6 +121,19 @@ app.post("/api/v1/login", async (req, res) => {
   }
 });
 
+app.post("/api/v1/logout", async (req, res) => {
+  try {
+    console.log(req.body)
+    await User.findOneAndUpdate(req.body, {isLogin: false} )
+    res.clearCookie('token')
+    res.json({status: 'User is logout'})
+  } catch (err) {
+    console.log(err)
+    res.status(300).json({status: "ERROR"})
+  }
+})
+
+
 app.post("/api/v1/addroom", async (req, res) => {
   try {
     const roomObj = await new Room(req.body)

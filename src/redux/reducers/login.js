@@ -4,6 +4,7 @@ import Cookies from "universal-cookie";
 
 const REG_USER = "REG_USER";
 const LOG_USER = "LOG_USER"
+const LOG_OUT_USER = "LOG_OUT_USER"
 
 const cookies = new Cookies()
 
@@ -11,9 +12,7 @@ const initialState = {
   email: "",
   password: "",
   token: cookies.get('token'),
-  user: '',
-  room: '',
-  messages: ['']
+  user: ''
 };
 
 export default (state = initialState, action) => {
@@ -28,11 +27,19 @@ export default (state = initialState, action) => {
     case LOG_USER: {
       return {
         ...state,
-        email: '',
-        password: '',
+        email: "",
+        password: "",
         token: action.token,
         user: action.user,
-        room: action.room
+      };
+    }
+    case LOG_OUT_USER: {
+      return {
+        ...state,
+        email: "",
+        password: "",
+        token: "",
+        user: ""
       };
     }
     default:
@@ -47,8 +54,7 @@ export function trySignIn() {
         dispatch({
           type: LOG_USER,
           token: data.token,
-          user: data.user,
-          room: '1'
+          user: data.user
         });
       });
   };
@@ -86,10 +92,26 @@ export function logUser(form) {
         dispatch({
           type: LOG_USER,
           token: data.token,
-          user: data.user,
-          room: '1'
+          user: data.user
         });
 
+      });
+  };
+}
+
+export function logOut(_id) {
+  return (dispatch) => {
+    return axios
+      .post(
+        "/api/v1/logout",
+        { _id },
+        { headers: { "Content-type": "application/json" } }
+      )
+      .then(({ data }) => {
+        dispatch({
+          type: LOG_OUT_USER,
+          data
+        });
       });
   };
 }
