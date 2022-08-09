@@ -12,6 +12,7 @@ import Login from './components/login/login'
 import Registration from "./components/registration/registration";
 import Rooms from './components/rooms/rooms';
 import Chat from "./components/chat/chat";
+import Admin from "./components/admin/admin"
 
 import './App.css';
 
@@ -31,6 +32,7 @@ const App = () => {
               }
             />
             <Route exact path="/reg" element={<Registration />} />
+            <Route exact path="/admin" element={<Admin />} />
             <Route
               exact
               path="/chat"

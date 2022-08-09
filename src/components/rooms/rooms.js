@@ -1,7 +1,9 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from "react-redux";
+import Cookies from "universal-cookie";
 
 import { getRoom } from "../../redux/reducers/rooms";
+import { logOut } from "../../redux/reducers/login";
 
 
 import Roomcard from "./roomcard";
@@ -12,13 +14,14 @@ import Navigation from "../navigation/navigation";
 
 const Rooms = () => {
 
+
   const dispatch = useDispatch()
-  const cookies = document.cookie
-  console.log(cookies)
+  const user = useSelector((store) => store.login.user)
 
   useEffect(() => {
     dispatch(getRoom())
   },[])
+
 
   const rooms = useSelector((store) => store.rooms.rooms);
 

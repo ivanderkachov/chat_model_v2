@@ -133,6 +133,15 @@ app.post("/api/v1/logout", async (req, res) => {
   }
 })
 
+app.get("/api/v1/getusers", async (req, res) => {
+  try {
+    const users = await User.find({}).exec()
+    res.json({status: "ok", users})
+  } catch (err) {
+    console.log(err)
+    res.status(300).json({status: "ERROR"})
+  }
+});
 
 app.post("/api/v1/addroom", async (req, res) => {
   try {
